@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Flip English</title>
+
+	<!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.cyan-light_blue.min.css">
+	<link rel="stylesheet" href="resource/css/style.css" />
+</head>
+<body id="body">
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-color--red-100 mdl-color-text--grey-600">
+    <div class="mdl-layout__header-row">
+      <span class="mdl-layout-title">Flip English</span>
+      <div class="mdl-layout-spacer"></div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+          <i class="material-icons">search</i>
+        </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" id="search">
+          <label class="mdl-textfield__label" for="search">Enter your query...</label>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    <main class="mdl-layout__content mdl-color--red-100">
+        <div class="mdl-grid">
+            <div id="flipbox"></div>
+        </div>
+    </main>
+</div>
+
+<!-- JavaScript -->
+<script src="resource/lib/jquery-1.11.0.min.js"></script>
+<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<script>
+$(function() {
+    $.ajax({
+        url: "contents/1.json",
+        success: function(data){
+            console.log(data);
+            $("#flipbox").append(data[0].ja);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
