@@ -3,8 +3,8 @@ var FlipManager;
 (function() {
 
 	FlipManager = function() {
-        this.data = [];
-        this.index = FlipManager.Config.INDEX_INIT;
+		this.data = [];
+		this.index = FlipManager.Config.INDEX_INIT;
 		this.direction = FlipManager.Config.DIRECTION.EN_JA;
 		this.language = FlipManager.Config.LANGUAGE.EN;
 		return this;
@@ -16,16 +16,16 @@ var FlipManager;
 		INDEX_INIT: -1
 	};
 
-    FlipManager.prototype.setData = function(data) {
+	FlipManager.prototype.setData = function(data) {
 		var dataArray = eval(data);
 		if (!this.validate(dataArray)) return false;
-        this.data = dataArray;
+		this.data = dataArray;
 
 		this.reset();
-        return true;
+		return true;
 	};
 
-    FlipManager.prototype.validate = function(data) {
+	FlipManager.prototype.validate = function(data) {
 		// array であること
 		if (!Array.isArray(data)) return false;
 
@@ -35,7 +35,7 @@ var FlipManager;
 		}
 
 		return true;
-    };
+	};
 
 	FlipManager.prototype.hasData = function() {
 		return this.data && Array.isArray(this.data) && this.data.length > 0;
@@ -69,7 +69,7 @@ var FlipManager;
 			this.toggleLanguage();
 		}
 		return true;
-    };
+	};
 
 	FlipManager.prototype.next = function() {
 		if (!this.hasData()) return false;
@@ -83,7 +83,7 @@ var FlipManager;
 			this.toggleLanguage();
 		}
 		return true;
-    };
+	};
 
 	FlipManager.prototype.shuffle = function() {
 		// shuffle data
@@ -106,11 +106,11 @@ var FlipManager;
 
 	FlipManager.prototype.toggleDirection = function() {
 		this.direction = (this.direction == FlipManager.Config.DIRECTION.EN_JA) ? FlipManager.Config.DIRECTION.JA_EN : FlipManager.Config.DIRECTION.EN_JA;
-    };
+	};
 
 	FlipManager.prototype.toggleLanguage = function() {
 		this.language = (this.language == FlipManager.Config.LANGUAGE.EN) ? FlipManager.Config.LANGUAGE.JA : FlipManager.Config.LANGUAGE.EN;
-    };
+	};
 
 	FlipManager.prototype.isDirectionEnJa = function() {
 		return this.direction == FlipManager.Config.DIRECTION.EN_JA;
@@ -119,6 +119,5 @@ var FlipManager;
 	FlipManager.prototype.isLanguageEn = function() {
 		return this.language == FlipManager.Config.LANGUAGE.EN;
 	};
-
 
 })();
