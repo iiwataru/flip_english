@@ -1,27 +1,10 @@
-html, body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  padding: 0;
-  position: relative;
-  min-width: 600px;
-  min-height: 400px;
-  background-color:#ffcccc;
-}
 #flipbox {
-  font-size:64px;
-  text-align:center;
-  position: absolute;  /*body要素に対して絶対配置*/
-  margin: -150px 0 0 0px;  /*縦横の半分をネガティブマージンでずらす*/
+  font-size: 64px;
+  text-align: center;
+  position: absolute;
+  margin: -100px 0 0 0px;  /*縦横の半分をネガティブマージンでずらす*/
   width: 92%;  /*横幅*/
-  height: 300px;  /*縦幅*/
+  height: 200px;  /*縦幅*/
   top: 50%;  /*上端を中央に*/
   left: 4%;  /*左端を中央に*/
-}
-
-#sample-text{
-  font-size:64px;
-  text-align:center;
-  margin-top:60px;
 }
