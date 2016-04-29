@@ -30,13 +30,11 @@ var Index;
             self.reverse();
         });
 
-        $("#prev").click(function () {
-            self.prev();
-        });
+		$("#main").click(function (e) {
+			if (e.pageX < $(window).width() / 2) self.prev();
+			else self.next();
+		});
 
-        $("#next").click(function () {
-            self.next();
-        });
     };
 
     Index.prototype.search = function() {
@@ -48,6 +46,9 @@ var Index;
 
         // text-fieldを畳む
         $("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
+
+		// text-fieldのfocusを外す
+		$("#search").blur();
 
         // コンテンツ取得
         var path = "contents/" + simplePath + ".json"

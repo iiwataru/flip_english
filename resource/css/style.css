@@ -2,9 +2,9 @@
   font-size: 64px;
   text-align: center;
   position: absolute;
-  margin: -100px 0 0 0px;  /*縦横の半分をネガティブマージンでずらす*/
-  width: 92%;  /*横幅*/
-  height: 200px;  /*縦幅*/
-  top: 50%;  /*上端を中央に*/
-  left: 4%;  /*左端を中央に*/
+  margin: -100px 0 0 0px;
+  width: 98%;
+  height: 300px;
+  top: 50%;
+  left: 1%;
 }
