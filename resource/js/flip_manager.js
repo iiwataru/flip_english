@@ -23,7 +23,7 @@ var FlipManager;
         var self = this;
         if (!self.validate(data)) return false;
 
-        self.data = data;
+        self.data = eval(data);
 		self.reset();
         return true;
 	};
@@ -37,9 +37,23 @@ var FlipManager;
 		this.language = this.isDirectionEnJa() ? FlipManager.Config.LANGUAGE.EN : FlipManager.Config.LANGUAGE.JA;
 	};
 
-    FlipManager.prototype.fetch = function() {
-        if (this.index >= this.data.length) return null;
-		var str = this.isLanguageEn() ? this.data[this.index].en : this.data[this.index].ja;
+	FlipManager.prototype.currentWord = function() {
+		if (this.index < 0 || this.index >= this.data.length) return null;
+		return this.isLanguageEn() ? this.data[this.index].en : this.data[this.index].ja;
+	};
+
+	FlipManager.prototype.fetchPrev = function() {
+		var str = this.currentWord();
+		if (str === null) return null;
+		if (this.isLastLanguage()) this.index--;
+		this.toggleLanguage();
+        return str;
+
+    };
+
+	FlipManager.prototype.fetchNext = function() {
+		var str = this.currentWord();
+		if (str === null) return null;
 		if (this.isLastLanguage()) this.index++;
 		this.toggleLanguage();
         return str;

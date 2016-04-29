@@ -15,11 +15,6 @@ var Index;
 		this.render();
 	};
 
-	Index.prototype.render = function() {
-		var directionStr = this.manager.isDirectionEnJa() ? "en > ja" : "ja > en";
-		$("#direction").text(directionStr);
-	};
-
 	Index.prototype.setEvents = function() {
 		var self = this;
 
@@ -51,6 +46,7 @@ var Index;
 
     Index.prototype.search = function() {
         var self = this;
+		var index = Index
 
         // 入力チェック
         var simplePath = $("#search").val();
@@ -68,7 +64,7 @@ var Index;
                     self.showMessage("Data received, but invalid format.");
                     return;
                 }
-                self.showMessage("Ready!");
+                self.showReadyMessage();
             },
             error: function(data){
                 self.showMessage("Not Found");
@@ -76,11 +72,9 @@ var Index;
         });
 	};
 
-    Index.prototype.showMessage = function(message) {
-        $("#flipbox").text(message);
-    };
-
     Index.prototype.replay = function() {
+		this.manager.reset();
+		this.showReadyMessage();
     };
 
     Index.prototype.shuffle = function() {
@@ -92,15 +86,37 @@ var Index;
     };
 
     Index.prototype.prev = function() {
+		var str = this.manager.fetchPrev();
+        if (!str) {
+			this.showReadyMessage();
+            return;
+        }
     };
 
     Index.prototype.next = function() {
-        var str = this.manager.fetch();
+        var str = this.manager.fetchNext();
         if (!str) {
-            this.showMessage("Fin.");
+			this.showFinishMessage();
             return;
         }
         this.showMessage(str);
+    };
+
+	Index.prototype.render = function() {
+		var directionStr = this.manager.isDirectionEnJa() ? "en > ja" : "ja > en";
+		$("#direction").text(directionStr);
+	};
+
+    Index.prototype.showMessage = function(message) {
+        $("#flipbox").text(message);
+    };
+
+	Index.prototype.showReadyMessage = function() {
+		this.showMessage("Ready?");
+    };
+
+	Index.prototype.showFinishMessage = function() {
+		this.showMessage("Fin.");
     };
 
 	var Index = new Index();
