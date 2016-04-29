@@ -85,6 +85,19 @@ var FlipManager;
 		return true;
     };
 
+	FlipManager.prototype.shuffle = function() {
+		// shuffle data
+		var m = this.data.length, t, i;
+		while (m) {
+			i = Math.floor(Math.random() * m--);
+			t = this.data[m];
+			this.data[m] = this.data[i];
+			this.data[i] = t;
+		}
+
+		this.reset();
+	};
+
 	FlipManager.prototype.isLanguagePrimary = function() {
 		if (this.isDirectionEnJa() && (this.language == FlipManager.Config.LANGUAGE.EN)) return true;
 		if (!this.isDirectionEnJa() && (this.language == FlipManager.Config.LANGUAGE.JA)) return true;

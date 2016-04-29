@@ -70,6 +70,8 @@ var Index;
     };
 
     Index.prototype.shuffle = function() {
+		this.manager.shuffle();
+		this.render();
     };
 
     Index.prototype.reverse = function() {
