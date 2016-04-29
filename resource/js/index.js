@@ -4,16 +4,12 @@ var Index;
 
 	Index = function() {
 		this.manager = new FlipManager()
-		this.initialize();
+		this.setEvents();
+		this.render();
 		return this;
 	};
 
 	Index.Config = {};
-
-	Index.prototype.initialize = function() {
-		this.setEvents();
-		this.render();
-	};
 
 	Index.prototype.setEvents = function() {
 		var self = this;
@@ -41,12 +37,10 @@ var Index;
         $("#next").click(function () {
             self.next();
         });
-
     };
 
     Index.prototype.search = function() {
         var self = this;
-		var index = Index
 
         // 入力チェック
         var simplePath = $("#search").val();
@@ -59,12 +53,10 @@ var Index;
         var path = "contents/" + simplePath + ".json"
         $.ajax({
             url: path,
+			cache: false,
             success: function(data){
-                if (!self.manager.setData(data)) {
-                    self.showMessage("Data received, but invalid format.");
-                    return;
-                }
-                self.showReadyMessage();
+                if (self.manager.setData(data)) self.render();
+                else self.showMessage("Invalid format");
             },
             error: function(data){
                 self.showMessage("Not Found");
@@ -74,7 +66,7 @@ var Index;
 
     Index.prototype.replay = function() {
 		this.manager.reset();
-		this.showReadyMessage();
+		this.render();
     };
 
     Index.prototype.shuffle = function() {
@@ -86,37 +78,32 @@ var Index;
     };
 
     Index.prototype.prev = function() {
-		var str = this.manager.fetchPrev();
-        if (!str) {
-			this.showReadyMessage();
-            return;
-        }
+		this.manager.prev();
+        this.render();
     };
 
     Index.prototype.next = function() {
-        var str = this.manager.fetchNext();
-        if (!str) {
-			this.showFinishMessage();
-            return;
-        }
-        this.showMessage(str);
+		this.manager.next();
+        this.render();
     };
 
 	Index.prototype.render = function() {
+		// direction
 		var directionStr = this.manager.isDirectionEnJa() ? "en > ja" : "ja > en";
 		$("#direction").text(directionStr);
+
+		// word
+		if (this.manager.hasData()) {
+			var str = this.manager.currentWord();
+	        if (str) this.showMessage(str);
+			else this.showMessage("Ready?");
+		} else {
+			this.showMessage("No data");
+		}
 	};
 
     Index.prototype.showMessage = function(message) {
         $("#flipbox").text(message);
-    };
-
-	Index.prototype.showReadyMessage = function() {
-		this.showMessage("Ready?");
-    };
-
-	Index.prototype.showFinishMessage = function() {
-		this.showMessage("Fin.");
     };
 
 	var Index = new Index();
