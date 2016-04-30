@@ -26,7 +26,7 @@ var Index;
 			self.shuffle();
 		});
 
-		$("#reverse").click(function () {
+		$("#reverse,#direction").click(function () {
 			self.reverse();
 		});
 
@@ -105,7 +105,7 @@ var Index;
 			if (str) this.showMessage(str);
 			else this.showMessage("Ready?");
 		} else {
-			this.showMessage("No data");
+			this.showMessage("　");
 		}
 	};
 
