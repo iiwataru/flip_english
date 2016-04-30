@@ -26,7 +26,7 @@ var Index;
 			self.shuffle();
 		});
 
-		$("#reverse,#direction").click(function () {
+		$("#reverse").click(function () {
 			self.reverse();
 		});
 
