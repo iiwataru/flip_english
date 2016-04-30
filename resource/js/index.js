@@ -5,6 +5,7 @@ var Index;
 	Index = function() {
 		this.manager = new FlipManager()
 		this.setEvents();
+		this.loadCache();
 		this.render();
 		return this;
 	};
@@ -16,6 +17,14 @@ var Index;
 
 		$("#search").change(function () {
 			self.search();
+		});
+
+		$("#search").focus(function () {
+			$("#search").select();
+		});
+
+		$("#search").blur(function () {
+			$("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
 		});
 
 		$("#replay").click(function () {
@@ -45,9 +54,6 @@ var Index;
 		if (simplePath.length == 0) return;
 
 		// text-fieldを畳む
-		$("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
-
-		// text-fieldのfocusを外す
 		$("#search").blur();
 
 		// コンテンツ取得
@@ -56,7 +62,13 @@ var Index;
 			url: path,
 			cache: false,
 			success: function(data){
-				if (self.manager.setData(data)) self.render();
+				if (self.manager.setData(data)) {
+					self.render();
+
+					// キャッシュ登録
+					Storage.setPath(simplePath);
+					Storage.setContent(JSON.stringify(data));
+				}
 				else self.showMessage("Invalid format");
 			},
 			error: function(data){
@@ -107,6 +119,20 @@ var Index;
 		} else {
 			this.showMessage("　");
 		}
+	};
+
+	Index.prototype.loadCache = function() {
+		var path = Storage.getPath();
+		var content = Storage.getContent();
+		if (path == null || content == null) return;
+
+		$("#search").val(path).select();
+		this.manager.setData(JSON.parse(content));
+		this.render();
+
+		setTimeout(function(){
+			$("#search").blur();
+		}, 800);
 	};
 
 	var Index = new Index();
