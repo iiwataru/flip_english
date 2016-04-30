@@ -3,7 +3,7 @@ var Index;
 (function() {
 
 	Index = function() {
-		this.manager = new FlipManager()
+		this.flip = new Flip()
 		this.setEvents();
 		this.loadCache();
 		this.render();
@@ -62,7 +62,7 @@ var Index;
 			url: path,
 			cache: false,
 			success: function(data){
-				if (self.manager.setData(data)) {
+				if (self.flip.setData(data)) {
 					self.render();
 
 					// キャッシュ登録
@@ -78,27 +78,27 @@ var Index;
 	};
 
 	Index.prototype.replay = function() {
-		this.manager.reset();
+		this.flip.reset();
 		this.render();
 	};
 
 	Index.prototype.shuffle = function() {
-		this.manager.shuffle();
+		this.flip.shuffle();
 		this.render();
 	};
 
 	Index.prototype.reverse = function() {
-		this.manager.toggleDirection();
+		this.flip.toggleDirection();
 		this.render();
 	};
 
 	Index.prototype.prev = function() {
-		this.manager.prev();
+		this.flip.prev();
 		this.render();
 	};
 
 	Index.prototype.next = function() {
-		this.manager.next();
+		this.flip.next();
 		this.render();
 	};
 
@@ -108,12 +108,12 @@ var Index;
 
 	Index.prototype.render = function() {
 		// direction
-		var directionStr = this.manager.isDirectionEnJa() ? "en > ja" : "ja > en";
+		var directionStr = this.flip.isDirectionEnJa() ? "en > ja" : "ja > en";
 		$("#direction").text(directionStr);
 
 		// word
-		if (this.manager.hasData()) {
-			var str = this.manager.currentWord();
+		if (this.flip.hasData()) {
+			var str = this.flip.currentWord();
 			if (str) this.showMessage(str);
 			else this.showMessage("Ready?");
 		} else {
@@ -127,7 +127,7 @@ var Index;
 		if (path == null || content == null) return;
 
 		$("#search").val(path).select();
-		this.manager.setData(JSON.parse(content));
+		this.flip.setData(JSON.parse(content));
 		this.render();
 
 		setTimeout(function(){

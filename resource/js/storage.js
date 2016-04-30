@@ -22,7 +22,7 @@
 	 * 値登録
 	 */
 	Storage._set = function(name, value) {
-		console.log('Storage._set name='+name +' value='+value);
+		// console.log('Storage._set name='+name +' value='+value);
 
 		// キー取得
 		var key = Storage._getKey(name);
@@ -37,7 +37,7 @@
 	 * 値取得
 	 */
 	Storage._get = function(name) {
-		console.log('Storage._get name='+name);
+		// console.log('Storage._get name='+name);
 
 		// キー取得
 		var key = Storage._getKey(name);
