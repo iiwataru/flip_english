@@ -11,7 +11,8 @@
 	Storage.Config = {
 		KEY: {
 			'PATH': 'PATH',
-			'CONTENT': 'CONTENT'
+			'CONTENT': 'CONTENT',
+			'DIRECTION': 'DIRECTION'
 		}
 	};
 
@@ -22,7 +23,7 @@
 	 * 値登録
 	 */
 	Storage._set = function(name, value) {
-		// console.log('Storage._set name='+name +' value='+value);
+		console.log('Storage._set name='+name +' value='+value);
 
 		// キー取得
 		var key = Storage._getKey(name);
@@ -37,7 +38,7 @@
 	 * 値取得
 	 */
 	Storage._get = function(name) {
-		// console.log('Storage._get name='+name);
+		console.log('Storage._get name='+name);
 
 		// キー取得
 		var key = Storage._getKey(name);
@@ -73,5 +74,11 @@
 	 */
 	Storage.setContent = function(value) {return Storage._set('CONTENT', value)};
 	Storage.getContent = function() {return Storage._get('CONTENT')};
+
+	/**
+	 * 方向
+	 */
+	Storage.setDirection = function(value) {return Storage._set('DIRECTION', value)};
+	Storage.getDirection = function() {return Storage._get('DIRECTION')};
 
 })();

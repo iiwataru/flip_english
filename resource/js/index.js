@@ -90,6 +90,7 @@ var Index;
 	Index.prototype.reverse = function() {
 		this.flip.toggleDirection();
 		this.render();
+		Storage.setDirection(this.flip.getDirection());
 	};
 
 	Index.prototype.prev = function() {
@@ -124,15 +125,23 @@ var Index;
 	Index.prototype.loadCache = function() {
 		var path = Storage.getPath();
 		var content = Storage.getContent();
-		if (path == null || content == null) return;
+		var direction = Storage.getDirection();
 
-		$("#search").val(path).select();
-		this.flip.setData(JSON.parse(content));
+		// パスとコンテンツ
+		if (path != null && content != null) {
+			$("#search").val(path).select();
+			this.flip.setData(JSON.parse(content));
+			setTimeout(function(){
+				$("#search").blur();
+			}, 800);
+		}
+
+		// 方向
+		if (direction != null) {
+			this.flip.setDirection(direction);
+		}
+
 		this.render();
-
-		setTimeout(function(){
-			$("#search").blur();
-		}, 800);
 	};
 
 	var Index = new Index();

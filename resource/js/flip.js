@@ -104,6 +104,15 @@ var Flip;
 		return false;
 	};
 
+	Flip.prototype.setDirection = function(value) {
+		if (value != Flip.Config.DIRECTION.EN_JA && value != Flip.Config.DIRECTION.JA_EN) return;
+		this.direction = value;
+	};
+
+	Flip.prototype.getDirection = function() {
+		return this.direction;
+	};
+
 	Flip.prototype.toggleDirection = function() {
 		this.direction = (this.direction == Flip.Config.DIRECTION.EN_JA) ? Flip.Config.DIRECTION.JA_EN : Flip.Config.DIRECTION.EN_JA;
 	};
