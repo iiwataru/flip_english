@@ -3,14 +3,12 @@ var Index;
 (function() {
 
 	Index = function() {
-		this.flip = new Flip()
+		this.flip = new Flip();
 		this.setEvents();
 		this.loadCache();
 		this.render();
 		return this;
 	};
-
-	Index.Config = {};
 
 	Index.prototype.setEvents = function() {
 		var self = this;
@@ -39,11 +37,11 @@ var Index;
 			self.reverse();
 		});
 
+		// クリック
 		$("#main").click(function (e) {
 			if (e.pageX < $(window).width() / 2) self.prev();
 			else self.next();
 		});
-
 	};
 
 	Index.prototype.search = function() {
@@ -143,6 +141,7 @@ var Index;
 
 		this.render();
 	};
+
 
 	var Index = new Index();
 
