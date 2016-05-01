@@ -137,6 +137,7 @@ var Index;
 		// 方向
 		if (direction != null) {
 			this.flip.setDirection(direction);
+			this.flip.reset();
 		}
 
 		this.render();
