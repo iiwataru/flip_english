@@ -6,7 +6,7 @@ var Swipe;
 		this.delegate = null;
 		this.direction = Swipe.Config.DIRECTION.NONE;
 		this.position = 0;
-		this.isPc = false;
+		this.isTouchDevice = false;
 		this.initDevice();
 		this.setEvent();
 		return this;
@@ -25,15 +25,7 @@ var Swipe;
 	};
 
 	Swipe.prototype.initDevice = function() {
-		var ua = navigator.userAgent;
-		if ( ua.indexOf('iPhone') > 0
-				|| ua.indexOf('iPad') > 0
-				|| ua.indexOf('iPod') > 0
-				|| ua.indexOf('Android') > 0 ) {
-			this.isPc = false;
-		} else {
-			this.isPc = true;
-		}
+		this.isTouchDevice = "ontouchstart" in window;
 	};
 
 	Swipe.prototype.setDelegate = function(obj) {
@@ -42,14 +34,14 @@ var Swipe;
 
 	Swipe.prototype.setEvent = function() {
 		var obj = $("body");
-		if (this.isPc) {
-			obj.on('mousedown', this.onTouchStart);
-			obj.on('mousemove', this.onTouchMove);
-			obj.on('mouseup', this.onTouchEnd);
-		} else {
+		if (this.isTouchDevice) {
 			obj.on('touchstart', this.onTouchStart);
 			obj.on('touchmove', this.onTouchMove);
 			obj.on('touchend', this.onTouchEnd);
+		} else {
+			obj.on('mousedown', this.onTouchStart);
+			obj.on('mousemove', this.onTouchMove);
+			obj.on('mouseup', this.onTouchEnd);
 		}
 	};
 
@@ -79,8 +71,8 @@ var Swipe;
 	};
 
 	Swipe.prototype.getPosition = function(e) {
-		if (this.isPc) return e.originalEvent.pageX;
-		else e.originalEvent.touches[0].pageX;
+		if (this.isTouchDevice) e.originalEvent.changedTouches[0].pageX;
+		else return e.originalEvent.pageX;
 	};
 
 })();
