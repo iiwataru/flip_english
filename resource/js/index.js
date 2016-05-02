@@ -17,11 +17,13 @@ var Index;
 			self.search();
 		});
 
-		$("#search").focus(function () {
-			$("#search").select();
+		$("#search").keyup(function(e){
+			// Return key
+			if (e.which == 13) self.search();
 		});
 
 		$("#search").blur(function () {
+			// Text fieldを畳む
 			$("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
 		});
 
@@ -55,8 +57,11 @@ var Index;
 		var simplePath = $("#search").val();
 		if (simplePath.length == 0) return;
 
-		// text-fieldを畳む
+		// Text fieldからフォーカスを外す
 		$("#search").blur();
+
+		// 表示クリア
+		self.clearMessage();
 
 		// コンテンツ取得
 		var path = "contents/" + simplePath + ".json"
@@ -105,6 +110,10 @@ var Index;
 		this.render();
 	};
 
+	Index.prototype.clearMessage = function(message) {
+		$("#flipbox").text("　");
+	};
+
 	Index.prototype.showMessage = function(message) {
 		$("#flipbox").text(message);
 	};
@@ -120,7 +129,7 @@ var Index;
 			if (str) this.showMessage(str);
 			else this.showMessage("Ready?");
 		} else {
-			this.showMessage("　");
+			this.clearMessage();
 		}
 	};
 
