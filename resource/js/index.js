@@ -25,21 +25,25 @@ var Index;
 			$("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
 		});
 
-		$("#replay").click(function () {
+		// タッチデバイスならtouchendイベントを採用する
+		var isTouchDevice = "ontouchstart" in window;
+		var ev = isTouchDevice ? 'touchend' : 'click';
+
+		$("#replay").on(ev, function () {
 			self.replay();
 		});
 
-		$("#shuffle").click(function () {
+		$("#shuffle").on(ev, function () {
 			self.shuffle();
 		});
 
-		$("#reverse").click(function () {
+		$("#reverse").on(ev, function () {
 			self.reverse();
 		});
 
-		// クリック
-		$("#main").click(function (e) {
-			if (e.pageX < $(window).width() / 2) self.prev();
+		$("#main").on(ev, function (e) {
+			var x = isTouchDevice ? e.originalEvent.changedTouches[0].pageX : e.originalEvent.pageX;
+			if (x < $(window).width() / 2) self.prev();
 			else self.next();
 		});
 	};
