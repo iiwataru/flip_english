@@ -47,7 +47,15 @@ var Flip;
 	};
 
 	Flip.prototype.reset = function() {
+		this.resetIndex();
+		this.resetLanguage();
+	};
+
+	Flip.prototype.resetIndex = function() {
 		this.index = Flip.Config.INDEX_INIT;
+	};
+
+	Flip.prototype.resetLanguage = function() {
 		this.language = this.isDirectionEnJa() ? Flip.Config.LANGUAGE.EN : Flip.Config.LANGUAGE.JA;
 	};
 
@@ -66,8 +74,10 @@ var Flip;
 			if (this.isLanguagePrimary()) {
 				this.index = (this.index == 0) ? Flip.Config.INDEX_INIT : this.index - 1;
 			}
-			this.toggleLanguage();
 		}
+
+		if (this.index != Flip.Config.INDEX_INIT) this.toggleLanguage();
+
 		return true;
 	};
 
@@ -94,7 +104,6 @@ var Flip;
 			this.data[m] = this.data[i];
 			this.data[i] = t;
 		}
-
 		this.reset();
 	};
 
@@ -107,6 +116,7 @@ var Flip;
 	Flip.prototype.setDirection = function(value) {
 		if (value != Flip.Config.DIRECTION.EN_JA && value != Flip.Config.DIRECTION.JA_EN) return;
 		this.direction = value;
+		if (this.index == Flip.Config.INDEX_INIT) this.resetLanguage();
 	};
 
 	Flip.prototype.getDirection = function() {
@@ -114,7 +124,11 @@ var Flip;
 	};
 
 	Flip.prototype.toggleDirection = function() {
-		this.direction = (this.direction == Flip.Config.DIRECTION.EN_JA) ? Flip.Config.DIRECTION.JA_EN : Flip.Config.DIRECTION.EN_JA;
+		if (this.direction == Flip.Config.DIRECTION.EN_JA) {
+			this.setDirection(Flip.Config.DIRECTION.JA_EN);
+		} else {
+			this.setDirection(Flip.Config.DIRECTION.EN_JA);
+		}
 	};
 
 	Flip.prototype.toggleLanguage = function() {
