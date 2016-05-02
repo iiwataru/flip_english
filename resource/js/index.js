@@ -13,7 +13,7 @@ var Index;
 	Index.prototype.setEvents = function() {
 		var self = this;
 
-		$("#search").change(function () {
+		$("#search").change(function() {
 			self.search();
 		});
 
@@ -22,28 +22,32 @@ var Index;
 			if (e.which == 13) self.search();
 		});
 
-		$("#search").blur(function () {
+		$("#search").blur(function() {
 			// Text fieldを畳む
 			$("#search-wrap").removeClass("is-focused").removeClass("is-dirty");
+		});
+
+		$(window).resize(function() {
+			self.layout();
 		});
 
 		// タッチデバイスならtouchendイベントを採用する
 		var isTouchDevice = "ontouchstart" in window;
 		var ev = isTouchDevice ? 'touchend' : 'click';
 
-		$("#replay").on(ev, function () {
+		$("#replay").on(ev, function() {
 			self.replay();
 		});
 
-		$("#shuffle").on(ev, function () {
+		$("#shuffle").on(ev, function() {
 			self.shuffle();
 		});
 
-		$("#reverse").on(ev, function () {
+		$("#reverse").on(ev, function() {
 			self.reverse();
 		});
 
-		$("#main").on(ev, function (e) {
+		$("#main").on(ev, function(e) {
 			var x = isTouchDevice ? e.originalEvent.changedTouches[0].pageX : e.originalEvent.pageX;
 			if (x < $(window).width() / 2) self.prev();
 			else self.next();
@@ -131,6 +135,15 @@ var Index;
 		} else {
 			this.clearMessage();
 		}
+
+		this.layout();
+	};
+
+	Index.prototype.layout = function() {
+		var top = ($(window).height() - $("#flipbox").height()) / 2 - $("#header").height() * 1.2; // 若干上にずらして見た目調整
+		var left = ($(window).width() - $("#flipbox").width()) / 2;
+		$("#flipbox").css("top", top);
+		$("#flipbox").css("left", left);
 	};
 
 	Index.prototype.loadCache = function() {
