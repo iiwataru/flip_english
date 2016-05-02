@@ -33,7 +33,7 @@ var Index;
 
 		// タッチデバイスならtouchendイベントを採用する
 		var isTouchDevice = "ontouchstart" in window;
-		var ev = isTouchDevice ? 'touchend' : 'click';
+		var ev = isTouchDevice ? "touchend" : "click";
 
 		$("#replay").on(ev, function() {
 			self.replay();
@@ -52,6 +52,15 @@ var Index;
 			if (x < $(window).width() / 2) self.prev();
 			else self.next();
 		});
+
+		if (isTouchDevice) {
+			// 縦スクロールを無効にする
+			$("body").on("touchmove", self.preventScroll, false);
+		}
+	};
+
+	Index.prototype.preventScroll = function(event) {
+		event.preventDefault();
 	};
 
 	Index.prototype.search = function() {
