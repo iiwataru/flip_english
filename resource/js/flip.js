@@ -4,6 +4,7 @@ var Flip;
 
 	Flip = function() {
 		this.data = [];
+		this.originalData = [];
 		this.index = Flip.Config.INDEX_INIT;
 		this.direction = Flip.Config.DIRECTION.EN_JA;
 		this.language = Flip.Config.LANGUAGE.EN;
@@ -20,6 +21,7 @@ var Flip;
 		var dataArray = eval(data);
 		if (!this.validate(dataArray)) return false;
 		this.data = dataArray;
+		this.originalData = [].concat(dataArray); // 配列コピー
 
 		this.reset();
 		return true;
@@ -27,6 +29,7 @@ var Flip;
 
 	Flip.prototype.clearData = function() {
 		this.data = [];
+		this.originalData = [];
 		this.reset();
 	};
 
@@ -49,6 +52,11 @@ var Flip;
 	Flip.prototype.getDataCount = function() {
 		if (!this.hasData()) return 0;
 		return this.data.length;
+	};
+
+	Flip.prototype.replay = function() {
+		this.data = [].concat(this.originalData); // 配列コピー
+		this.reset();
 	};
 
 	Flip.prototype.reset = function() {

@@ -108,7 +108,7 @@ var Index;
 	};
 
 	Index.prototype.replay = function() {
-		this.flip.reset();
+		this.flip.replay();
 		this.render();
 	};
 
