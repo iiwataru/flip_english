@@ -25,6 +25,11 @@ var Flip;
 		return true;
 	};
 
+	Flip.prototype.clearData = function() {
+		this.data = [];
+		this.reset();
+	};
+
 	Flip.prototype.validate = function(data) {
 		// array であること
 		if (!Array.isArray(data)) return false;

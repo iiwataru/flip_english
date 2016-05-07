@@ -66,12 +66,22 @@ var Index;
 	Index.prototype.search = function() {
 		var self = this;
 
-		// 入力チェック
+		// パス取得
 		var simplePath = $("#search").val();
-		if (simplePath.length == 0) return;
 
 		// Text fieldからフォーカスを外す
 		$("#search").blur();
+
+		// 入力チェック
+		if (simplePath.length == 0) {
+			self.flip.clearData();
+			self.render();
+
+			// キャッシュ削除
+			Storage.setPath("");
+			Storage.setContent("");
+			return;
+		}
 
 		// 表示クリア
 		self.clearMessage();
@@ -124,7 +134,7 @@ var Index;
 	};
 
 	Index.prototype.clearMessage = function(message) {
-		$("#flipbox").text("　");
+		$("#flipbox").text("");
 	};
 
 	Index.prototype.showMessage = function(message) {
@@ -161,7 +171,7 @@ var Index;
 		var direction = Storage.getDirection();
 
 		// パスとコンテンツ
-		if (path != null && content != null) {
+		if (path.length > 0 && content.length > 0) {
 			$("#search").val(path).select();
 			this.flip.setData(JSON.parse(content));
 			setTimeout(function(){
