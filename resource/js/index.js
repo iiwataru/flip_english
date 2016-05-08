@@ -4,6 +4,7 @@ var Index;
 
 	Index = function() {
 		this.flip = new Flip();
+		this.searchEnabled = true;
 		this.setEvents();
 		this.loadCache();
 		this.render();
@@ -20,6 +21,10 @@ var Index;
 		$("#search").keyup(function(e){
 			// Return key
 			if (e.which == 13) self.search();
+		});
+
+		$("#search").focus(function(){
+			self.searchEnabled = true;
 		});
 
 		$("#search").blur(function() {
@@ -55,16 +60,18 @@ var Index;
 
 		if (isTouchDevice) {
 			// 縦スクロールを無効にする
-			$("body").on("touchmove", self.preventScroll, false);
+			$("body").on("touchmove", function(e) {
+				e.preventDefault();
+			});
 		}
-	};
-
-	Index.prototype.preventScroll = function(event) {
-		event.preventDefault();
 	};
 
 	Index.prototype.search = function() {
 		var self = this;
+
+		// 二重処理を防止
+		if (!self.searchEnabled) return;
+		self.searchEnabled = false;
 
 		// パス取得
 		var simplePath = $("#search").val();
