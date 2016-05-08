@@ -19,7 +19,10 @@ var Flip;
 
 	Flip.prototype.setData = function(data) {
 		var dataArray = eval(data);
-		if (!this.validate(dataArray)) return false;
+		if (!this.validate(dataArray)) {
+			this.clearData();
+			return false;
+		}
 		this.data = dataArray;
 		this.originalData = [].concat(dataArray); // 配列コピー
 
@@ -90,7 +93,6 @@ var Flip;
 		}
 
 		if (this.index != Flip.Config.INDEX_INIT) this.toggleLanguage();
-
 		return true;
 	};
 

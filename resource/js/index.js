@@ -109,6 +109,7 @@ var Index;
 				else self.showMessage("Invalid format");
 			},
 			error: function(data){
+				self.flip.clearData();
 				self.showMessage("Not Found");
 			},
 		});
@@ -131,21 +132,20 @@ var Index;
 	};
 
 	Index.prototype.prev = function() {
-		this.flip.prev();
-		this.render();
+		if (this.flip.prev()) this.render();
 	};
 
 	Index.prototype.next = function() {
-		this.flip.next();
-		this.render();
-	};
-
-	Index.prototype.clearMessage = function(message) {
-		$("#flipbox").text("");
+		if (this.flip.next()) this.render();
 	};
 
 	Index.prototype.showMessage = function(message) {
 		$("#flipbox").text(message);
+		this.layout();
+	};
+
+	Index.prototype.clearMessage = function(message) {
+		this.showMessage("");
 	};
 
 	Index.prototype.render = function() {
@@ -161,15 +161,14 @@ var Index;
 		} else {
 			this.clearMessage();
 		}
-
-		this.layout();
 	};
 
 	Index.prototype.layout = function() {
-		var top = ($(window).height() - $("#flipbox").height()) / 2 - $("#header").height() * 1.2; // 若干上にずらして見た目調整
-		var left = ($(window).width() - $("#flipbox").width()) / 2;
-		$("#flipbox").css("top", top);
-		$("#flipbox").css("left", left);
+		var flipbox = $("#flipbox");
+		var top = ($(window).height() - flipbox.height()) / 2 - $("#header").height() * 1.2; // 若干上にずらして見た目調整
+		var left = ($(window).width() - flipbox.width()) / 2;
+		flipbox.css("top", top);
+		flipbox.css("left", left);
 	};
 
 	Index.prototype.loadCache = function() {
@@ -194,7 +193,6 @@ var Index;
 
 		this.render();
 	};
-
 
 	var Index = new Index();
 
