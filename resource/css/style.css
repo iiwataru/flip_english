@@ -24,3 +24,7 @@ body {
     height: 208px;
     left: 1%;
 }
+
+.button-spacer {
+    width: 24px;
+}
