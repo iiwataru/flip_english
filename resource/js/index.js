@@ -5,10 +5,15 @@ var Index;
 	Index = function() {
 		this.flip = new Flip();
 		this.searchEnabled = true;
+		this.fontSize = this.Config.FONT_SIZE.DEFAULT;
 		this.setEvents();
 		this.loadCache();
 		this.render();
 		return this;
+	};
+
+	Index.prototype.Config = {
+		FONT_SIZE: {DEFAULT: 64, MIN: 10, MAX: 400, STEP: 2}
 	};
 
 	Index.prototype.setEvents = function() {
@@ -39,6 +44,14 @@ var Index;
 		// タッチデバイスならtouchendイベントを採用する
 		var isTouchDevice = "ontouchstart" in window;
 		var ev = isTouchDevice ? "touchend" : "click";
+
+		$("#zoom_out").on(ev, function() {
+			self.zoomOutFontSize();
+		});
+
+		$("#zoom_in").on(ev, function() {
+			self.zoomInFontSize();
+		});
 
 		$("#replay").on(ev, function() {
 			self.replay();
@@ -113,6 +126,23 @@ var Index;
 				self.showMessage("Not Found");
 			},
 		});
+	};
+
+	Index.prototype.zoomOutFontSize = function() {
+		if (this.fontSize <= this.Config.FONT_SIZE.MIN) return;
+		this.fontSize -= this.Config.FONT_SIZE.STEP;
+		this.setFontSize(this.fontSize);
+	};
+
+	Index.prototype.zoomInFontSize = function() {
+		if (this.fontSize >= this.Config.FONT_SIZE.MAX) return;
+		this.fontSize += this.Config.FONT_SIZE.STEP;
+		this.setFontSize(this.fontSize);
+	};
+
+	Index.prototype.setFontSize = function(value) {
+		$("#flipbox").css("font-size", value);
+		this.layout();
 	};
 
 	Index.prototype.replay = function() {
