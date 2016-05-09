@@ -12,7 +12,8 @@
 		KEY: {
 			'PATH': 'PATH',
 			'CONTENT': 'CONTENT',
-			'DIRECTION': 'DIRECTION'
+			'DIRECTION': 'DIRECTION',
+			'FONT_SIZE': 'FONT_SIZE'
 		}
 	};
 
@@ -80,5 +81,11 @@
 	 */
 	Storage.setDirection = function(value) {return Storage._set('DIRECTION', value)};
 	Storage.getDirection = function() {return Storage._get('DIRECTION')};
+
+	/**
+	 * フォントサイズ
+	 */
+	Storage.setFontSize = function(value) {return Storage._set('FONT_SIZE', value)};
+	Storage.getFontSize = function() {return Storage._get('FONT_SIZE')};
 
 })();

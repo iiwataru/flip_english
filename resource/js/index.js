@@ -130,21 +130,20 @@ var Index;
 	};
 
 	Index.prototype.zoomOutFontSize = function() {
-		if (this.fontSize <= this.Config.FONT_SIZE.MIN) return;
-		this.fontSize -= this.Config.FONT_SIZE.STEP;
-		this.setFontSize(this.fontSize);
+		this.setFontSize(this.fontSize - this.Config.FONT_SIZE.STEP);
 	};
 
 	Index.prototype.zoomInFontSize = function() {
-		if (this.fontSize >= this.Config.FONT_SIZE.MAX) return;
-		this.fontSize += this.Config.FONT_SIZE.STEP;
-		this.setFontSize(this.fontSize);
+		this.setFontSize(this.fontSize + this.Config.FONT_SIZE.STEP);
 	};
 
 	Index.prototype.setFontSize = function(value) {
+		if (value < this.Config.FONT_SIZE.MIN || value > this.Config.FONT_SIZE.MAX) return false;
 		$("#flipbox").css("font-size", value + "px");
 		$("#flipbox").css("line-height", value + this.Config.LINE_HEIGHT_MARGIN + "px");
 		this.layout();
+		this.fontSize = value;
+		Storage.setFontSize(value);
 	};
 
 	Index.prototype.replay = function() {
@@ -207,9 +206,10 @@ var Index;
 		var path = Storage.getPath();
 		var content = Storage.getContent();
 		var direction = Storage.getDirection();
+		var fontSize = Storage.getFontSize();
 
 		// パスとコンテンツ
-		if (path.length > 0 && content.length > 0) {
+		if (path && path.length > 0 && content && content.length > 0) {
 			$("#search").val(path).select();
 			this.flip.setData(JSON.parse(content));
 			setTimeout(function(){
@@ -218,9 +218,14 @@ var Index;
 		}
 
 		// 方向
-		if (direction != null) {
+		if (direction && direction.length > 0) {
 			this.flip.setDirection(direction);
 			this.flip.resetLanguage();
+		}
+
+		// フォントサイズ
+		if (fontSize && fontSize.length > 0) {
+			this.setFontSize(parseInt(fontSize));
 		}
 
 		this.render();
