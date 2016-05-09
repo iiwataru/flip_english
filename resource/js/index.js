@@ -13,7 +13,8 @@ var Index;
 	};
 
 	Index.prototype.Config = {
-		FONT_SIZE: {DEFAULT: 64, MIN: 10, MAX: 400, STEP: 2}
+		FONT_SIZE: {DEFAULT: 80, MIN: 20, MAX: 400, STEP: 20},
+		LINE_HEIGHT_MARGIN: 8
 	};
 
 	Index.prototype.setEvents = function() {
@@ -141,7 +142,8 @@ var Index;
 	};
 
 	Index.prototype.setFontSize = function(value) {
-		$("#flipbox").css("font-size", value);
+		$("#flipbox").css("font-size", value + "px");
+		$("#flipbox").css("line-height", value + this.Config.LINE_HEIGHT_MARGIN + "px");
 		this.layout();
 	};
 
